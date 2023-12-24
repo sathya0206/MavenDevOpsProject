@@ -12,7 +12,7 @@ pipeline {
                  $class: 'GitSCM',
                  branches: [[name: 'master']],
                  userRemoteConfigs: [[
-                    url: 'https://github.com/devopseng129/DevOpsClassCodes.git',
+                    url: 'https://github.com/sathya0206/MavenDevOpsProject.git',
                     credentialsId: '',
                  ]]
                 ])
@@ -20,30 +20,25 @@ pipeline {
         }
         stage('clone') {
             steps {
-                git url: 'https://github.com/devopseng129/DevOpsClassCodes.git'
+                git url: 'https://github.com/sathya0206/MavenDevOpsProject.git'
             }
         }
-        stage('compile') {
+        stage('compile_job') {
             steps {
                 sh 'mvn compile'
             }
         }
-        stage('code_review') {
+        stage('code_review_job') {
             steps {
                 sh 'mvn -P metrics pmd:pmd'
             }
         }
-        stage('unit_test') {
+        stage('test_job') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('metric_check') {
-            steps{
-                sh 'mvn cobertura:cobertura -D cobertura.report.format=xml'
-            }
-        }
-        stage('package') {
+        stage('package_job') {
             steps{
                 sh 'mvn package'
             }
